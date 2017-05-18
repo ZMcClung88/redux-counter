@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { decrement, increment, redo, undo } from "./ducks/counter";
+import { decrement, increment, redo, undo, clear } from "./ducks/counter";
 
 import "./App.css";
 
 class App extends Component {
 	render() {
+		console.log(this.props)
 		const {
 			  currentValue
 			, decrement
@@ -15,12 +16,44 @@ class App extends Component {
 			, previousValues
 			, redo
 			, undo
+			, clear
 		} = this.props;
 		return (
 			<div className="app">
 				<section className="counter">
 					<h1 className="counter__current-value">{ currentValue }</h1>
 					<div className="counter__button-wrapper">
+					<button
+						className="counter__button"
+						onClick={ () => decrement( 1 ) }
+					>
+						-1
+					</button>
+					<button
+						className="counter__button"
+						onClick={ () => decrement( 5 ) }
+					>
+						-5
+					</button>
+					<button
+						className="counter__button"
+						onClick={ () => decrement( 11 ) }
+					>
+						-11
+					</button>
+					<button
+						className="counter__button"
+						onClick={ () => decrement( 50 ) }
+					>
+						-50
+					</button>
+					<button
+						className="counter__button"
+						onClick={ () => decrement( 100 ) }
+					>
+						-100
+					</button>
+					<br/>
 						<button
 							className="counter__button"
 							onClick={ () => increment( 1 ) }
@@ -35,15 +68,21 @@ class App extends Component {
 						</button>
 						<button
 							className="counter__button"
-							onClick={ () => decrement( 1 ) }
+							onClick={ () => increment( 11 ) }
 						>
-							-1
+							+11
 						</button>
 						<button
 							className="counter__button"
-							onClick={ () => decrement( 5 ) }
+							onClick={ () => increment( 50 ) }
 						>
-							-5
+							+50
+						</button>
+						<button
+							className="counter__button"
+							onClick={ () => increment( 100 ) }
+						>
+							+100
 						</button>
 						<br />
 						<button
@@ -53,12 +92,21 @@ class App extends Component {
 						>
 							Undo
 						</button>
+						<br />
 						<button
 							className="counter__button"
 							disabled={ futureValues.length === 0 }
 							onClick={ redo }
 						>
 							Redo
+						</button>
+						<br />
+						<button
+							className="counter__button"
+							disabled={ previousValues.length === 0 }
+							onClick={ clear }
+						>
+							Clear
 						</button>
 					</div>
 				</section>
@@ -76,4 +124,4 @@ function mapStateToProps( state ) {
 	return state;
 }
 
-export default connect( mapStateToProps, { decrement, increment, redo, undo } )( App );
+export default connect( mapStateToProps, { decrement, increment, redo, undo, clear } )( App );

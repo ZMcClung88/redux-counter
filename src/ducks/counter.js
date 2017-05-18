@@ -1,7 +1,10 @@
+export const BLACK_DIAMOND = false;
+
 const INCREMENT = "INCREMENT";
 const DECREMENT = "DECREMENT";
 const UNDO = "UNDO";
 const REDO = "REDO";
+const CLEAR = "CLEAR";
 
 const initialState = {
 	  currentValue: 0
@@ -9,7 +12,7 @@ const initialState = {
 	, previousValues: []
 };
 
-export default function counter( state = initialState, action ) {
+export default function count( state = initialState, action ) {
 	switch ( action.type ) {
 		case INCREMENT:
 			return {
@@ -35,6 +38,12 @@ export default function counter( state = initialState, action ) {
 				, futureValues: state.futureValues.slice( 1, state.futureValues.length )
 				, previousValues: [ state.currentValue, ...state.previousValues ]
 			};
+    case CLEAR:
+      return {
+          currentValue: 0
+        , futureValues: []
+        , previousValues: []
+      };
 		default:
 			return state;
 	}
@@ -54,4 +63,8 @@ export function undo() {
 
 export function redo() {
 	return { type: REDO };
+}
+
+export function clear(){
+  return { type: CLEAR };
 }
